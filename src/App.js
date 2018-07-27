@@ -11,15 +11,16 @@ class App extends Component {
 
     this.state={
       selectVal: "name",
-      color:"",
-      material: "",
       name: "",
       price: "",
-      showData: false
+      showData: false,
+      pageindex:0
     }
     this.handleChange=this.handleChange.bind(this);
     this.selectChange=this.selectChange.bind(this);
-    this.handleSearch=this.handleSearch.bind(this)
+    this.handleSearch=this.handleSearch.bind(this);
+    this.nextPage=this.nextPage.bind(this);
+    this.prevPage=this.prevPage.bind(this);
   }
 
   componentWillMount() {
@@ -35,28 +36,35 @@ class App extends Component {
     })
   }
 
-  handlePageClick = (data) => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * 10);
-  }
 
   selectChange=(e)=>{
     this.setState({
       selectVal: e.target.value,
-      color:'',
-      material:'',
       name:'',
       price:'',
-      showData:false
+      showData:false,
+      pageindex:0
     })
   }
 
   handleSearch() {
     this.setState({
-      showData:true
+      showData:true,
+      pageindex:0
     })
   }
 
+  nextPage() {
+    this.setState((prevState)=>({
+      pageindex:prevState.pageindex+8
+    }))
+  }
+  
+  prevPage() {
+    this.setState((prevState)=>({
+      pageindex:prevState.pageindex-8
+    }))
+  }
 
   render() {
     return (
@@ -68,13 +76,11 @@ class App extends Component {
           <div className='row searchinput justify-content-between'>
             <div className='inputcol col-xs-12 col-sm-12 col-md-6 col-lg-5 col-xl-4'>
               <input type='text' placeholder={`search using ${this.state.selectVal}`} onChange={this.handleChange} name={this.state.selectVal} value={this.state[this.state.selectVal]}/>
-              <a href="#" onClick={this.handleSearch}>Search</a>
             </div>
+            <a href="#" onClick={this.handleSearch} className='button' >Search</a>
             <div className='selectcol col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-2'>
               <select id='fieldSelect' onChange={this.selectChange} value={this.state.selectVal} >
                 <option value='name'>Name</option>
-                <option value='color'>Color</option>
-                <option value='material'>Material</option>
                 <option value='price'>Price</option>
               </select>
             </div>
@@ -82,24 +88,45 @@ class App extends Component {
         </div>
 
         <section className="container-fluid">
-          <div className="row">
-          {
-            (this.state.showData)
-            ?
-            
-            (
-              cartdata
-              .filter(x=>x[this.state.selectVal].toLowerCase().includes(this.state[this.state.selectVal])).slice(0,10)
-              .map(data=>{
-                return(
-                  <CardDisplay key={data.id} data={data} />
-                )}
-              )
-          )
-          : <h1>Search Items in SearchBar</h1>
+              {/* Page navigation */}
+          <div className='pagenav'>
+              {/* Not rendering prev page button on the first page */}
+            {(this.state.pageindex!==0)&& <a href="#" onClick={this.prevPage}>Prev Page</a>}  
 
+            <a href="#" onClick={this.nextPage}>Next Page</a>
+          </div>
+          
+          {/* Showing number of records */}
+          {(this.state.showData)
+            ? 
+              <h1>{cartdata
+                .filter(x=>x[this.state.selectVal].toLowerCase().includes(this.state[this.state.selectVal])).length} entries - ({this.state.pageindex+1} - {this.state.pageindex+8})</h1>
+            :
+              <h1>{cartdata.length} entries - ({this.state.pageindex+1} - {this.state.pageindex+8})</h1>
           }
 
+          <div className="row">
+            {
+              (this.state.showData)
+              ? 
+                cartdata
+                .filter(x=>x[this.state.selectVal].toLowerCase().includes(this.state[this.state.selectVal]))
+                .slice(this.state.pageindex,this.state.pageindex+8)
+                .map(data=>{
+                  return(
+                    <CardDisplay key={data.id} data={data} />
+                  )}
+                )
+            
+              : cartdata
+                .slice(this.state.pageindex,this.state.pageindex+8)
+                .map(data=>{
+                  return(
+                    <CardDisplay key={data.id} data={data} />
+                  )}
+                )
+
+            }
           </div>
         </section>
 

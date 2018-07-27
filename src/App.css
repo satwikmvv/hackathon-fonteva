@@ -12,6 +12,22 @@
   font-weight: 900;
 }
 
+.button{
+  background-color: rgb(255, 174, 0);
+  padding:13px;
+  margin-bottom:15px;
+  text-decoration: none;
+  border:20px;
+  border-radius:3px;
+}
+.button:hover{
+  text-decoration: none;
+}
+
+.pagenav a {
+  margin:20px;
+}
+
 .inputcol,.selectcol {
   padding-bottom: 5px;
 }
