@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
 
     this.state={
-      selectVal: "color",
+      selectVal: "name",
       color:"",
       material: "",
       name: "",
@@ -83,9 +83,13 @@ class App extends Component {
 
         <section className="container-fluid">
           <div className="row">
-          {(this.state.showData)?
-            (cartdata
-              .filter(x=>x.name.toLowerCase().includes(this.state.name))
+          {
+            (this.state.showData)
+            ?
+            
+            (
+              cartdata
+              .filter(x=>x[this.state.selectVal].toLowerCase().includes(this.state[this.state.selectVal])).slice(0,10)
               .map(data=>{
                 return(
                   <CardDisplay key={data.id} data={data} />
