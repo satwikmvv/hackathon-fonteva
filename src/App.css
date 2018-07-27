@@ -1,0 +1,69 @@
+  
+.App {
+  text-align: center;
+}
+.title {
+  height:130px;
+  margin: 0 auto;
+}
+.title > h1{
+  margin:auto;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.inputcol,.selectcol {
+  padding-bottom: 5px;
+}
+
+.searchinput input {
+  width:100%;
+  height:45px;
+  background-color: #0000009c;
+  color: darkgray;
+  font-weight: 900;
+  font-size: 18px;
+  border: none;
+  padding:5px;
+}
+.searchinput select {
+  width:100%;
+  height:45px;
+  background-color: #0000009c;
+  color: darkgray;
+  font-weight: 900;
+  font-size: 18px;
+  border:none;
+}
+
+.pokeimg {
+  height: 120px; 
+  margin: 15px auto;
+  display: block;
+  max-width:150px;
+}
+
+.card {
+  background-color: #000000c7;
+  box-shadow:8px 10px 8px #0000006e;
+  margin-bottom:1rem !important;
+  border:none;
+  color:white;
+  border-radius:10px;
+}
+
+.container-fluid {
+  padding-top: 20px
+}
+
+.card-header {
+  background-color: #fe0001;
+  color: black;
+  border-radius: 10px 10px 0 0 ;
+}
+
+.Form-header {
+  width:100%;
+  background-color: #fe0001;
+  color: black
+}
